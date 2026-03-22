@@ -1,0 +1,10 @@
+auth:
+  username: rupeshvn
+  password: gunner
+  database: stocksdb
+
+primary:
+  persistence:
+    enabled: true
+    size: 5Gi
+

@@ -1,0 +1,28 @@
+executor: LocalExecutor
+posgresql:
+  enabled: false
+
+data:
+  metadataConnection:
+    user: rupeshvn
+    pass: gunner
+    protocol: posgresql
+    host: posgresql-posgresql
+    port: 5432
+    db: stocksdb
+
+webserver:
+  service:
+    type: NodePort
+
+extraPipPackages:
+  - yfinance
+  - pandas
+  - psycopg2-binary
+
+dags:
+  gitSync:
+    enabled: true
+    repo: https://github.com/rupeshvn/stockmarket.git
+    branch: main
+    subPath: dags
