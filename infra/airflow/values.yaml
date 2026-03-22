@@ -1,13 +1,13 @@
 executor: LocalExecutor
-posgresql:
+postgresql:
   enabled: false
 
 data:
   metadataConnection:
     user: rupeshvn
     pass: gunner
-    protocol: posgresql
-    host: posgresql-posgresql
+    protocol: postgresql
+    host: postgresql-postgresql
     port: 5432
     db: stocksdb
 
