@@ -1,4 +1,5 @@
 executor: LocalExecutor
+
 postgresql:
   enabled: false
 
@@ -7,13 +8,31 @@ data:
     user: rupeshvn
     pass: gunner
     protocol: postgresql
-    host: postgresql-postgresql
+    host: postgres-postgresql
     port: 5432
     db: stocksdb
 
 webserver:
   service:
     type: NodePort
+
+scheduler:
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+
+workers:
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+
+triggerer:
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
 
 extraPipPackages:
   - yfinance
