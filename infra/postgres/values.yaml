@@ -8,3 +8,9 @@ primary:
     enabled: true
     size: 5Gi
 
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+
+
