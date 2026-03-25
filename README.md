@@ -21,7 +21,12 @@ FastAPI → Airflow → Kubernetes → Postgres
     - With the install postgres command, helm first downloads the chart and then merges with values.yaml. It then generates the kubernetes yaml and sends to kubernetes api. It internally creates pod, service, pvc (storage) and secrets (passwords)
     - With the install airflow command, it internally creates a scheduler pod, webserver (API Server), Triggerer, DAG Processor, ConfigMaps and Secrets. The values.yaml ensures that it connects to Postgres not creating its own db
     
-5. Deploy FastAPI
+4. Store normal variables on Git and secrets in kubernetes cluster
+    - Storing secrets in Kubernetes cluster, we can use the command
+        - Keep the secrets in env file and check if its getting committed
+        - Run the command to populate the k3s env file
+        - 
+Deploy FastAPI
 6. Trigger DAG via API
 
 Some important commands:
@@ -38,11 +43,47 @@ Some important commands:
 4. To describe the pods in k3s
     - kubectl describe pod <podname>
 
+5. Normally kubernetes restarts automatically on every boot. To check if its enabled we can run the below command:
+    - sudo systemctl is-enabled k3s
+
 Some important learning targets:
 
 1. Go inside a container and see the DAG files live
 2. Trigger DAG and trace execution
 3. Build API to trigger DAG
+
+
+Some important pi and laptop commands:
+1. If you want to check all the ips connected to the wifi on laptop
+    nmap -sn 192.168.29.0/24
+
+2. To get the wifi ip on pi
+    ip addr show wlan0
+
+3. To get the wifi details on your pi run on pi
+    nmcli dev wifi list
+    If i cannot see my 5ghz wifi connection in it then its because the wifi connection channel would not be in the range of 36-48. We can see the channel of our wifi, we can run the below command on our laptop:
+        iw dev
+    Switching off and on our wifi can change the channel
+
+4. To see all the connections on our pi
+    nmcli connections show
+
+5. To check the priority of our connections on pi
+    nmcli connection show "<wifi name>" | grep autoconnect-priority
+
+6. To modify the auto connection priority
+    sudo nmcli connection modify "rupsnowy" connection.autoconnect-priority 20
+    sudo nmcli connection modify "rupsnowy" connection.autoconnect yes
+
+    similarly update the auto connect priority of other wifi as well
+
+7. To restart the network manager on pi
+    sudo systemctl restart NetworkManager
+
+8. To check which wifi our pi is connected to 
+    nmcli device status
+
 
 
 Issues Encountered:
@@ -56,6 +97,8 @@ Issues Encountered:
 3. Command used to connect with the wifi
     Solution - 
         sudo nmcli dev wifi connect "wifiname" password "actual_password"
+    Then we can get the ip using the command
+        - ip addr show wlan0
 
 4. DNS issue which is critical for Helm/Docker. Was getting "lookup auth.docker.io: i/o timeout"
     Solution - The solution was router DNS was unreliable. Configured DNS via Network Manager. The commands used are:
