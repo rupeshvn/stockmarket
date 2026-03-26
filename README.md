@@ -20,8 +20,54 @@ FastAPI → Airflow → Kubernetes → Postgres
     - Helm is an app store. Helm stores the repo URL's locally so that it knows where to fetch the charts
     - With the install postgres command, helm first downloads the chart and then merges with values.yaml. It then generates the kubernetes yaml and sends to kubernetes api. It internally creates pod, service, pvc (storage) and secrets (passwords)
     - With the install airflow command, it internally creates a scheduler pod, webserver (API Server), Triggerer, DAG Processor, ConfigMaps and Secrets. The values.yaml ensures that it connects to Postgres not creating its own db
+
+Pending things:
     
 4. Store normal variables on Git and secrets in kubernetes cluster
+    - Create a .env file on pi in the same git folder (it is never tracked)
+    - Store the secrets in that env file
+    - Run the command
+        kubectl create secret generic fastapi-secret \
+            --from-env-file=.env\
+            --dry-run=client -o yaml | kubectl apply -f -
+        This command generates the yaml file and then applies it to the cluster
+
+5. Update the Fastapi code and create docker image and push
+    - Signed up on docker using codewithrupeshv gmail
+    - Username as rupeshvn
+    - Run the following commands on our laptop
+        - sudo apt update
+        - sudo apt install docker.io -y
+        - sudo usermod -aG docker $USER
+        - docker --version (to verify)
+        - docker login (stores creds to our local automatically)
+    - We need to have multi arch builds because the image we build from our laptop would be of our laptop architecture. It might not run on pi architecture. Run the below commands on our laptop
+        - sudo apt update
+        - sudo apt install ca-certificates curl gnupg -y
+        - sudo apt install -m 0755 -d /etc/apt/keyrings
+        - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+        - echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        - sudo apt update
+        - sudo apt install docker-buildx-plugin -y
+        - docker buildx version (verify buildx version)
+    - Buildx will not work with default docker driver. We need docker-container driver. Below are the commands
+        - docker buildx create --name mybuilder --driver docker-container
+        - docker buildx use mybuilder
+        - docker buildx inspect --bootstrap
+            (this downloads the required buildkit containers and enables multi arch support)
+        - docker buildx ls
+            (we can check the driver being used by buildx)
+    - Create a build_and_push.sh file in scripts
+        - chmod +x scripts/build_and_push.sh (gives it execute permission)
+        - /scripts/build_and_push.sh
+    
+
+        
+
+
+    
+
+
     - Storing secrets in Kubernetes cluster, we can use the command
         - Keep the secrets in env file and check if its getting committed
         - Run the command to populate the k3s env file
@@ -83,6 +129,9 @@ Some important pi and laptop commands:
 
 8. To check which wifi our pi is connected to 
     nmcli device status
+
+9. To see the hidden folders
+    ls -a
 
 
 

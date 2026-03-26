@@ -1,9 +1,30 @@
 from fastapi import FastAPI
-from .routes import router
+import requests
+import os
 
 app = FastAPI()
-app.include_router(router)
 
-@app.get("/health")
+AIRFLOW_URL = os.getenv("AIRFLOW_URL")
+USERNAME = os.getenv("USERNAME")
+PASSWORD = os.getenv("PASSWORD")
+
+
+@app.get("/")
 def health():
     return {"status": "ok"}
+
+
+@app.post("/trigger/{dag_id}")
+def trigger_dag(dag_id: str):
+    url = f"{AIRFLOW_URL}/api/v1/dags/{dag_id}/dagRuns"
+
+    response = requests.post(
+        url,
+        auth=(USERNAME, PASSWORD),
+        json={}
+    )
+
+    return {
+        "status": response.status_code,
+        "response": response.json()
+    }
