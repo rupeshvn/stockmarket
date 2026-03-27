@@ -38,12 +38,10 @@ triggerer:
       memory: "128Mi"
       cpu: "100m"
 
-images:
-  airflow:
-    extraPipPackages:
-      - yfinance
-      - pandas
-      - psycopg2-binary
+extraPipPackages:
+  - yfinance
+  - pandas
+  - psycopg2-binary
 
 dags:
   gitSync:
