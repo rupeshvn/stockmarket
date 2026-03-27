@@ -43,6 +43,11 @@ extraPipPackages:
   - pandas
   - psycopg2-binary
 
+images:
+  airflow:
+    repository: rupeshvn/airflow-custom
+    tag: latest
+
 dags:
   gitSync:
     enabled: true

@@ -103,6 +103,13 @@ Some important commands:
 8. If you make any changes in the values.yaml file of airflow in infra, then we need to run the below command
     - helm upgrade airflow apache-airflow/airflow -f infra/airflow/values.yaml
 
+9. If any changes are not getting applied, we can delete the pods and it will get recreated
+    - kubectl delete pod \
+airflow-api-server-7cf7fdb96b-j6tpb \
+airflow-dag-processor-fd6c897cc-l4kj5 \
+airflow-scheduler-0 \
+airflow-triggerer-0
+
 Some important learning targets:
 
 1. Go inside a container and see the DAG files live
