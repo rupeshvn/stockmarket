@@ -17,7 +17,7 @@ def fetch_and_store():
     cur = conn.cursor()
 
     cur.execute("""
-        CREATE TABLE IF NOT EXISTS stock_data (
+        CREATE TABLE IF NOT EXISTS stock_data_test (
             date TIMESTAMP,
             open FLOAT,
             close FLOAT

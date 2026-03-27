@@ -12,6 +12,9 @@ data:
     port: 5432
     db: stocksdb
 
+config:
+  AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+
 webserver:
   service:
     type: NodePort

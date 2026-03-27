@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import requests
 import os
+import base64
 
 app = FastAPI()
 
@@ -16,12 +17,16 @@ def health():
 
 @app.post("/trigger/{dag_id}")
 def trigger_dag(dag_id: str):
-    url = f"{AIRFLOW_URL}/api/v1/dags/{dag_id}/dagRuns"
+    url = f"{AIRFLOW_URL}/api/v2/dags/{dag_id}/dagRuns"
+    credentials = f"{USERNAME}:{PASSWORD}"
+    encoded_credentials = base64.b64encode(credentials.encode()).decode()
 
     response = requests.post(
         url,
-        auth=(USERNAME, PASSWORD),
-        json={}
+        headers={
+            "Authorization": f"Basic {encoded_credentials}",
+            "Content-Type": "application/json"},
+        json={"conf": {}}
     )
 
     return {

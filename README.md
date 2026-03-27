@@ -20,8 +20,6 @@ FastAPI → Airflow → Kubernetes → Postgres
     - Helm is an app store. Helm stores the repo URL's locally so that it knows where to fetch the charts
     - With the install postgres command, helm first downloads the chart and then merges with values.yaml. It then generates the kubernetes yaml and sends to kubernetes api. It internally creates pod, service, pvc (storage) and secrets (passwords)
     - With the install airflow command, it internally creates a scheduler pod, webserver (API Server), Triggerer, DAG Processor, ConfigMaps and Secrets. The values.yaml ensures that it connects to Postgres not creating its own db
-
-Pending things:
     
 4. Store normal variables on Git and secrets in kubernetes cluster
     - Create a .env file on pi in the same git folder (it is never tracked)
@@ -60,17 +58,21 @@ Pending things:
     - Create a build_and_push.sh file in scripts
         - chmod +x scripts/build_and_push.sh (gives it execute permission)
         - /scripts/build_and_push.sh
-    
 
+    - Deploy the fastapi code
+        - Take the latest pull on pi and run the below commands
+            - kubectl apply -f infra/fastapi/deployment.yaml
+            - kubectl apply -f infra/fastapi/service.yaml
         
+        - To get the services ip and ports on pi, we can run 
+            - kubectl get svc
 
-
+Pending things:
+    - run the command till its successful 
+        -curl -X POST http://192.168.29.178:30007/trigger/yahoo_finance_dag        
     
 
-
-    - Storing secrets in Kubernetes cluster, we can use the command
-        - Keep the secrets in env file and check if its getting committed
-        - Run the command to populate the k3s env file
+    
         - 
 Deploy FastAPI
 6. Trigger DAG via API
@@ -91,6 +93,12 @@ Some important commands:
 
 5. Normally kubernetes restarts automatically on every boot. To check if its enabled we can run the below command:
     - sudo systemctl is-enabled k3s
+
+6. To get the cluster ip and nodes
+    - kubectl get svc
+
+7. Whenever we push a new fastapi image to docker, to get it deployed we need to run the command
+    - kubectl rollout restart deployment fastapi
 
 Some important learning targets:
 
