@@ -47,6 +47,7 @@ images:
   airflow:
     repository: rupeshvn/airflow-custom
     tag: latest
+    pullPolicy: Always
 
 dags:
   gitSync:

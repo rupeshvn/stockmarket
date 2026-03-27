@@ -68,6 +68,8 @@ FastAPI → Airflow → Kubernetes → Postgres
             - kubectl get svc
 
 Pending things:
+    - Issue was that the airflow scheduler was not having yfinance which is why the dag was not getting imported. Now creating it via docker image and deploying it
+
     - run the command till its successful 
         -curl -X POST http://192.168.29.178:30007/trigger/yahoo_finance_dag        
     
