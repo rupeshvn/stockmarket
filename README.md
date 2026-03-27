@@ -100,6 +100,9 @@ Some important commands:
 7. Whenever we push a new fastapi image to docker, to get it deployed we need to run the command
     - kubectl rollout restart deployment fastapi
 
+8. If you make any changes in the values.yaml file of airflow in infra, then we need to run the below command
+    - helm upgrade airflow apache-airflow/airflow -f infra/airflow/values.yaml
+
 Some important learning targets:
 
 1. Go inside a container and see the DAG files live

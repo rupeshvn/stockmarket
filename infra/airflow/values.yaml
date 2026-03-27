@@ -13,7 +13,8 @@ data:
     db: stocksdb
 
 config:
-  AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+  api:
+    auth_backends: airflow.api.auth.backend.basic_auth
 
 webserver:
   service:
