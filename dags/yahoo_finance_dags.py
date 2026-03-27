@@ -34,10 +34,11 @@ def fetch_and_store():
     cur.close()
     conn.close()
 
+    
 with DAG(
-    "yahoo_stock",
+    dag_id="yahoo_stock",
     start_date=datetime(2024,1,1),
-    schedule_interval=None,
+    schedule=None,
     catchup=False
 ) as dag:
 
