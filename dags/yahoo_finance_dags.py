@@ -26,8 +26,8 @@ def fetch_and_store():
 
     for index, row in data.iterrows():
         cur.execute(
-            "INSERT INTO stock_data (date, open, close) VALUES (%s, %s, %s)",
-            (index, row['Open'], row['Close'])
+            "INSERT INTO stock_data_test (date, open, close) VALUES (%s, %s, %s)",
+            (index, float(row['Open']), float(row['Close']))
         )
 
     conn.commit()
