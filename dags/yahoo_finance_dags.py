@@ -9,9 +9,9 @@ def fetch_and_store():
 
     conn = psycopg2.connect(
         host="postgres-postgresql",
-        database="airflowdb",
-        user="airflow",
-        password="airflowpass"
+        database="stocksdb",
+        user="rupeshvn",
+        password="gunner"
     )
 
     cur = conn.cursor()

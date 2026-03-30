@@ -68,7 +68,7 @@ FastAPI → Airflow → Kubernetes → Postgres
             - kubectl get svc
 
 Pending things:
-    - Issue was that the airflow scheduler was not having yfinance which is why the dag was not getting imported. Now creating it via docker image and deploying it
+    - Now the dag is visible on ui. I have triggered it on cli using command
 
     - run the command till its successful 
         -curl -X POST http://192.168.29.178:30007/trigger/yahoo_finance_dag        
@@ -107,10 +107,22 @@ Some important commands:
 
 9. If any changes are not getting applied, we can delete the pods and it will get recreated
     - kubectl delete pod \
-airflow-api-server-7cf7fdb96b-j6tpb \
-airflow-dag-processor-fd6c897cc-l4kj5 \
-airflow-scheduler-0 \
-airflow-triggerer-0
+        airflow-api-server-7cf7fdb96b-j6tpb \
+        airflow-dag-processor-fd6c897cc-l4kj5 \
+        airflow-scheduler-0 \
+        airflow-triggerer-0
+
+10. If we are changing the airflow code, then we need to pull it and then just delete the airflow scheduler pod
+    - kubectl delete pod airflow-scheduler-0
+
+12. To trigger a dag via terminal on pi
+    - kubectl exec -it airflow-scheduler-0 -- airflow dags trigger yahoo_stock
+
+13. To check the logs of airflow
+    - kubectl logs airflow-scheduler-0 | tail -n 50
+
+14. To list the dag runs
+    - 
 
 Some important learning targets:
 

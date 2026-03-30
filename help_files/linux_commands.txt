@@ -1,0 +1,12 @@
+1. To connect to any device that is connected via usb
+    - Go to media location
+        - cd /media/<username>
+    - Now we need to find the mtp host
+        - cd /run/user/$(id -u)/gvfs
+    - Then go to the mtp location
+        - cd "mtp:host=motorola_moto_x4_ZY224GR7HR"
+
+2. To order the folders basis their size
+    - du -h --max-depth=1 | sort -hr
+
+3. 
