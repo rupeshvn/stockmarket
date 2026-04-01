@@ -1,7 +1,5 @@
 from sqlalchemy import Column, Float, DateTime
-from sqlalchemy.orm import declarative_base
-
-Base = declarative_base()
+from app.db.base import Base
 
 class StockData(Base):
     __tablename__ = "stock_data"
