@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.api.stocks import router as stock_router
-from app.api.airflow import router as airflow_router
+from api.stocks import router as stock_router
+from api.airflow import router as airflow_router
 
 app = FastAPI()
 
