@@ -1,5 +1,5 @@
-from models.stock import StockData
-from db.database import SessionLocal
+from app.models.stock import StockData
+from app.db.database import SessionLocal
 
 def create_stock(stock_data):
     db = SessionLocal()
