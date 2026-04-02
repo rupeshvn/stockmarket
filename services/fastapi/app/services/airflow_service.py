@@ -1,6 +1,6 @@
 import requests
 import base64
-from app.core.config import AIRFLOW_URL, USERNAME, PASSWORD
+from core.config import AIRFLOW_URL, USERNAME, PASSWORD
 
 
 def trigger_dag_service(dag_id: str):

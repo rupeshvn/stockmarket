@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.services.airflow_service import trigger_dag_service
+from services.airflow_service import trigger_dag_service
 
 router = APIRouter()
 
