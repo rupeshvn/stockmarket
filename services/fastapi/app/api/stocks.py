@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.schemas.stock import StockCreate, StockResponse
-from app.services.stock_service import create_stock, get_all_stocks
+from schemas.stock import StockCreate, StockResponse
+from services.stock_services import create_stock, get_all_stocks
 
 router = APIRouter()
 
